@@ -7,7 +7,7 @@ mongoose.connect (MONGO_URI, { useMongoClient: true, })
 
 // 连接成功
 mongoose.connection.on ('connected', function () {
-  console.log ('🌈Mongoose connection open to 6324')
+  console.log ('🌈  Mongoose connection open ')
 })
 
 // 连接失败

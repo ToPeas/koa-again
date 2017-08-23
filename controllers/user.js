@@ -1,4 +1,5 @@
 const User = require ('../models/user')
+import { generateToken, decodeToken } from '../middlewares/jwt'
 
 export const add = async (ctx, next) => {
   const { username, password, email, description, } = ctx.request.body
@@ -19,7 +20,8 @@ export const login = async (ctx, next) => {
   const user = await User.findOne ({ username })
   if (!user) return ctx.error ('用户不存在')
   if (password === user.password) {
-    ctx.success ('登录成功', {})
+    const token = generateToken ({ username, email: user.email })
+    ctx.success ('登录成功', { token })
   } else {
     return ctx.error ('密码错误', {})
   }
@@ -28,7 +30,11 @@ export const login = async (ctx, next) => {
 
 export const all = async (ctx, next) => {
   const users = await User.find ()
-  ctx.success ('获取所用数据成功', users, 200)
+  // console.log (ctx.state.jwt)
+  // await next ()
+  // console.log (22)
+  if (users) return ctx.success ('获取所有数据成功', users, 201)
+  ctx.success ('获取所有数据成功', users, 200)
 }
 
 export const del = async (ctx, next) => {
