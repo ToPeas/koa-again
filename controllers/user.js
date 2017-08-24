@@ -22,6 +22,11 @@ export const login = async (ctx, next) => {
   if (password === user.password) {
     const token = generateToken ({ username, email: user.email })
     ctx.success ('登录成功', { token })
+    ctx.session.userInfo = {
+      username,
+      email: user.email,
+      lastLoginDate: new Date (),
+    }
   } else {
     return ctx.error ('密码错误', {})
   }
@@ -30,11 +35,10 @@ export const login = async (ctx, next) => {
 
 export const all = async (ctx, next) => {
   const users = await User.find ()
-  // console.log (ctx.state.jwt)
-  // await next ()
-  // console.log (22)
   if (users) return ctx.success ('获取所有数据成功', users, 201)
   ctx.success ('获取所有数据成功', users, 200)
+
+  await next ()
 }
 
 export const del = async (ctx, next) => {
@@ -48,6 +52,7 @@ export const del = async (ctx, next) => {
 }
 
 export const one = async (ctx, next) => {
+  console.log ('hhhh')
   const _id = ctx.params.id
   if (!_id) return ctx.error ('没有id', {}, 404)
   const user = await User.findOne ({
@@ -58,4 +63,25 @@ export const one = async (ctx, next) => {
     email: user.email,
   }, 200)
   ctx.error ('不存在此用户', {}, 200)
+}
+
+// 测试redis。第一次使用redis
+export const test = async (ctx, next) => {
+  console.log ('tttt')
+  // const { uid } = ctx.request.query
+  // console.log (id)
+  // if (+id === 1) {
+  //   ctx.session.userInfo = {
+  //     username: '我的ID是1'
+  //   }
+  // }
+  // if (+id === 2) {
+  //   ctx.session.userInfo = {
+  //     username: '我的ID是2'
+  //   }
+  //
+  // }
+  ctx.body = {
+    data: '我的id是'
+  }
 }

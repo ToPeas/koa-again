@@ -1,6 +1,6 @@
 const router = require ('koa-router') ()
 import jwt from '../middlewares/jwt'
-import { add, login, all, del, one } from '../controllers/user'
+import { add, login, all, del, one, test } from '../controllers/user'
 
 // console.log (add)
 
@@ -12,7 +12,8 @@ import { add, login, all, del, one } from '../controllers/user'
 
 router.prefix ('/api/user')
 
-router.get ('/all', jwt, all)
+router.get ('/all', all)
+  .get ('/test', test)
   .get ('/:id', one)
   .post ('/add', add)
   .post ('/login', login)
