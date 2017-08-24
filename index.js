@@ -1,5 +1,3 @@
-// require ('babel-core/register')
-
 import Koa from 'koa'
 import KoaRouter from 'koa-router'
 import bodyParser from 'koa-bodyparser'
@@ -7,12 +5,10 @@ import logger from 'koa-logger'
 import helmet from 'koa-helmet'
 import session from 'koa-session2'
 import Store from './middlewares/redisStore'
-
-const routes = require ('./routes/user')
-
+import config from './config'
+import routes from './routes/user'
 import './middlewares/db'
-
-const returnTemplate = require ('./middlewares/return')
+import returnTemplate from './middlewares/return'
 
 const app = new Koa ()
 
@@ -28,8 +24,6 @@ app.use (logger ())
 app.use (helmet ())
 
 // app.use (jwt)
-
-// 统一处理错误的模板
 
 // session
 
@@ -54,15 +48,20 @@ app.use (session ({
   expires: getExpires (1)
 }))
 
+// 统一处理错误的模板
+
 app.use (returnTemplate)
+// console.log (config)
 
 app.use (routes.routes (), router.allowedMethods ())
 
-app.listen (6324, err => {
+app.listen (config.port, err => {
   if (err) {
     console.log (err)
   }
-  console.log ('🌴  Koa server listen on 6324')
+  console.log (`🌴  Koa server listen on ${config.port}`)
+  console.log (`👟  Mode is ${process.env.NODE_ENV}`)
+  // console.log (process.env)
 })
 
 

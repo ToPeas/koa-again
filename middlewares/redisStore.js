@@ -5,7 +5,6 @@ class RedisStore extends Store {
   constructor() {
     super ()
     this.redis = new Redis ({
-      pass: '123',
       port: '6379',
       host: '127.0.1',
     })
@@ -35,8 +34,6 @@ class RedisStore extends Store {
 }
 
 export default RedisStore
-
-
 
 // const redis = require('ioredis')
 // const uid = require('uid-safe')
