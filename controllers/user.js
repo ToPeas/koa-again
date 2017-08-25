@@ -1,5 +1,6 @@
 const User = require ('../models/user')
-import { generateToken, decodeToken } from '../middlewares/jwt'
+import { generateToken } from '../middlewares/jwt'
+import CURD from './curd'
 
 export const add = async (ctx, next) => {
   const { username, password, email, description, } = ctx.request.body
@@ -22,9 +23,10 @@ export const login = async (ctx, next) => {
   if (password === user.password) {
     const token = generateToken ({ username, email: user.email })
     ctx.success ('登录成功', { token })
-    ctx.session.userInfo = {
+    ctx.session = {
       username,
       email: user.email,
+      role: 'admin',
       lastLoginDate: new Date (),
     }
   } else {
@@ -66,7 +68,7 @@ export const one = async (ctx, next) => {
 
 // 测试redis。第一次使用redis
 export const test = async (ctx, next) => {
-  console.log ('tttt')
+  // console.log ('tttt')
   // const { uid } = ctx.request.query
   // console.log (id)
   // if (+id === 1) {
@@ -80,7 +82,24 @@ export const test = async (ctx, next) => {
   //   }
   //
   // }
-  ctx.body = {
-    data: '我的id是'
+  ctx.success ('访问接口成功')
+}
+
+export const testClass = async (ctx) => {
+
+  class UserClass extends CURD {
+    constructor() {
+      super ()
+    }
+
+    static isTest(ctx) {
+      return super.isHaveAuth (ctx)
+    }
+
   }
+
+  const cc = new UserClass ()
+  console.log (cc.isMethod (ctx))
+
+  return ctx.success (UserClass.isTest (ctx))
 }

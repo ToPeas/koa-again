@@ -6,7 +6,7 @@ import helmet from 'koa-helmet'
 import session from 'koa-session2'
 import Store from './middlewares/redisStore'
 import config from './config'
-import routes from './routes/user'
+import routes from './routes'
 import './middlewares/db'
 import returnTemplate from './middlewares/return'
 
@@ -45,7 +45,7 @@ function getExpires(duraing, format = 'm') {
 app.use (session ({
   key: 'SESSIONID',
   store: new Store (),
-  expires: getExpires (1)
+  expires: getExpires (10)
 }))
 
 // 统一处理错误的模板
