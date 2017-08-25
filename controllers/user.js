@@ -29,6 +29,7 @@ export const login = async (ctx, next) => {
       role: 'admin',
       lastLoginDate: new Date (),
     }
+    console.log (ctx.session)
   } else {
     return ctx.error ('密码错误', {})
   }
@@ -53,7 +54,6 @@ export const del = async (ctx, next) => {
 }
 
 export const one = async (ctx, next) => {
-  console.log ('hhhh')
   const _id = ctx.params.id
   if (!_id) return ctx.error ('没有id', {}, 404)
   const user = await User.findOne ({

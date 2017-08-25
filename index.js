@@ -4,11 +4,18 @@ import bodyParser from 'koa-bodyparser'
 import logger from 'koa-logger'
 import helmet from 'koa-helmet'
 import session from 'koa-session2'
+import path from 'path'
+import koaStatic from 'koa-static'
+import koaFavicon from 'koa-favicon'
 import Store from './middlewares/redisStore'
 import config from './config'
-import routes from './routes'
+import routes from './api-routes'
+import route from './routes'
 import './middlewares/db'
 import returnTemplate from './middlewares/return'
+import views from 'koa-views'
+// 单页应用需要的
+// import history from 'koa-connect-history-api-fallback'
 
 const app = new Koa ()
 
@@ -22,8 +29,6 @@ app.use (bodyParser ())
 app.use (logger ())
 
 app.use (helmet ())
-
-// app.use (jwt)
 
 // session
 
@@ -48,17 +53,34 @@ app.use (session ({
   expires: getExpires (10)
 }))
 
+// 后端渲染的页面
+app.use (views (path.join (__dirname, './views'), { map: { html: 'nunjucks' } }))
+
+// app.use(views(__dirname, { map: {html: 'nunjucks' }})
+
 // 统一处理错误的模板
 
 app.use (returnTemplate)
 // console.log (config)
 
+// 这是页面渲染
+
+app.use (route.routes (), router.allowedMethods ())
+
+// 处理favicon
+
+app.use (koaFavicon (path.join (__dirname, './assets/images/avatar.png')))
+
+// 静态资源的处理
+
+app.use (koaStatic (path.join (__dirname, './assets')))
+
+// 这是接口api
+
 app.use (routes.routes (), router.allowedMethods ())
 
 app.listen (config.port, err => {
-  if (err) {
-    console.log (err)
-  }
+  if (err) console.log (err)
   console.log (`🌴  Koa server listen on ${config.port}`)
   console.log (`👟  Mode is ${process.env.NODE_ENV}`)
   // console.log (process.env)

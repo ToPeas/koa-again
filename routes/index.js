@@ -1,11 +1,11 @@
 import koaRouter from 'koa-router'
-import users from './user'
 
-// console.log (users)
 const router = new koaRouter ()
 
-router.prefix ('/api')
-
-router.use (users.routes (), users.allowedMethods ())
+router.get ('/', (ctx) => {
+  console.log (ctx.session)
+  const { username } = ctx.session
+  return ctx.render ('home', { username })
+})
 
 export default router
