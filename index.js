@@ -14,8 +14,19 @@ import route from './routes'
 import './middlewares/db'
 import returnTemplate from './middlewares/return'
 import views from 'koa-views'
+import cache from 'koa-static-cache'
+import compress from 'koa-compress'
+
 // 单页应用需要的
 // import history from 'koa-connect-history-api-fallback'
+
+// 可能会用到
+
+// import glob from 'glob'
+//
+// glob ('./middlewares/*.js', function (err, files) {
+//   console.log (files)
+// })
 
 const app = new Koa ()
 
@@ -29,6 +40,21 @@ app.use (bodyParser ())
 app.use (logger ())
 
 app.use (helmet ())
+
+// 压缩文件
+app.use (compress ({
+  filter: function (content_type) {
+    // console.log (content_type)
+    // console.log (/image\/png/i.test (content_type))
+    return /image\/png/i.test (content_type)
+  },
+  threshold: 2048,
+  flush: require ('zlib').Z_SYNC_FLUSH
+}))
+
+app.use (cache (path.join (__dirname, 'assets'), {
+  maxAge: 60
+}))
 
 // session
 
@@ -56,12 +82,9 @@ app.use (session ({
 // 后端渲染的页面
 app.use (views (path.join (__dirname, './views'), { map: { html: 'nunjucks' } }))
 
-// app.use(views(__dirname, { map: {html: 'nunjucks' }})
-
 // 统一处理错误的模板
 
 app.use (returnTemplate)
-// console.log (config)
 
 // 这是页面渲染
 
