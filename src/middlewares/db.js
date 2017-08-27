@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import config from '../config'
+import config from '../config/index'
 
 console.log (config.mongo.MONGO_URL)
 

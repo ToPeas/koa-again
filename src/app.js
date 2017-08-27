@@ -7,12 +7,12 @@ import session from 'koa-session2'
 import path from 'path'
 import koaStatic from 'koa-static'
 import koaFavicon from 'koa-favicon'
-import Store from './middlewares/redisStore'
-import config from './config'
-import routes from './api-routes'
-import route from './routes'
-import './middlewares/db'
-import returnTemplate from './middlewares/return'
+import Store from './middlewares/redisStore.js'
+import config from './config/index.js'
+import routes from './api-routes/index.js'
+import route from './routes/index.js'
+import './middlewares/db.js'
+import returnTemplate from './middlewares/return.js'
 import views from 'koa-views'
 import cache from 'koa-static-cache'
 import compress from 'koa-compress'
@@ -109,4 +109,4 @@ app.listen (config.port, err => {
   // console.log (process.env)
 })
 
-
+export default app.listen (6324)
