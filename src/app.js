@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+'use strict'
+
 import Koa from 'koa'
 import KoaRouter from 'koa-router'
 import bodyParser from 'koa-bodyparser'
@@ -8,7 +12,7 @@ import path from 'path'
 import koaStatic from 'koa-static'
 import koaFavicon from 'koa-favicon'
 import Store from './middlewares/redisStore.js'
-import config from './config/index.js'
+// import config from './config/index.js'
 import routes from './api-routes/index.js'
 import route from './routes/index.js'
 import './middlewares/db.js'
@@ -102,11 +106,11 @@ app.use (koaStatic (path.join (__dirname, './assets')))
 
 app.use (routes.routes (), router.allowedMethods ())
 
-app.listen (config.port, err => {
+app.listen (6324, err => {
   if (err) console.log (err)
-  console.log (`🌴  Koa server listen on ${config.port}`)
-  console.log (`👟  Mode is ${process.env.NODE_ENV}`)
-  // console.log (process.env)
+  console.log (`🌴  Koa server listen on 6324`)
+  console.log (`👟  Mode is `)
+
 })
 
-export default app.listen (6324)
+export default app

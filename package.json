@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
-    "test": "cross-env NODE_ENV=test jest --forceExit"
+    "test": "jest --forceExit"
   },
   "dependencies": {
     "babel-register": "^6.26.0",
@@ -48,9 +48,6 @@
     "webpack": "^3.5.5"
   },
   "jest": {
-    "verbose": true,
-    "testMatch": [
-      "<rootDir>/test/**/*.test.js"
-    ]
+    "rootDir": "./test"
   }
 }
