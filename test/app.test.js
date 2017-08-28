@@ -1,20 +1,15 @@
 import request from 'supertest'
-import app from '../src/cc'
+import app from '../src/test'
 
-console.log (app)
-const loginInfo = {
-  username: 'cc',
-  password: '123',
-}
-
-// describe ('测试user接口', () => {
-test ('登录接口', () => {
-  return request (app)
-    .get ('/api/user/test')
-    .then (res => {
-      console.log (res)
-      expect (res.text).toBe ('{"ac":"ccc"}')
-    })
+describe ('测试user接口', () => {
+  it ('登录接口', () => {
+    return request (app)
+      .get ('/')
+      .expect ('Content-Type', /json/)
+      .expect (200)
+      .then (res => {
+        const data = res.body
+        expect (data.username).toBe ('pei')
+      })
+  })
 })
-
-// })

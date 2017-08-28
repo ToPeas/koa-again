@@ -2,7 +2,7 @@ const Koa = require ('koa')
 const app = new Koa ()
 
 app.use (async ctx => {
-  ctx.body = { ac: 'ccc' }
+  ctx.body = { username: 'pei' }
 })
 
 module.exports = app.listen (7777)
