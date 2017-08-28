@@ -15,7 +15,7 @@ const configs = {
   test: {
     port: 6325,
     mongo: {
-      url: 'mongodb://localhost:27017/pei',
+      url: 'mongodb://localhost:27017/testPei',
     }
 
   }

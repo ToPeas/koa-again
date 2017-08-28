@@ -29,7 +29,6 @@ export const login = async (ctx, next) => {
       role: 'admin',
       lastLoginDate: new Date (),
     }
-    console.log (ctx.session)
   } else {
     return ctx.error ('密码错误', {})
   }
@@ -38,7 +37,6 @@ export const login = async (ctx, next) => {
 
 export const all = async (ctx, next) => {
   const users = await User.find ()
-  console.log ('session', ctx.session)
   if (users) return ctx.success ('获取所有数据成功', { users, session: ctx.session }, 200)
   await next ()
 }
@@ -98,8 +96,6 @@ export const testClass = async (ctx) => {
 
   }
 
-  const cc = new UserClass ()
-  console.log (cc.isMethod (ctx))
-
+  // const cc = new UserClass ()
   return ctx.success (UserClass.isTest (ctx))
 }

@@ -1,7 +1,3 @@
-#!/usr/bin/env node
-
-'use strict'
-
 import Koa from 'koa'
 import KoaRouter from 'koa-router'
 import bodyParser from 'koa-bodyparser'
@@ -12,7 +8,7 @@ import path from 'path'
 import koaStatic from 'koa-static'
 import koaFavicon from 'koa-favicon'
 import Store from './middlewares/redisStore.js'
-// import config from './config/index.js'
+import config from '../config/index.js'
 import routes from './api-routes/index.js'
 import route from './routes/index.js'
 import './middlewares/db.js'
@@ -90,7 +86,7 @@ app.use (views (path.join (__dirname, './views'), { map: { html: 'nunjucks' } })
 
 app.use (returnTemplate)
 
-// 这是页面渲染
+// 后端页面渲染
 
 app.use (route.routes (), router.allowedMethods ())
 
@@ -106,11 +102,11 @@ app.use (koaStatic (path.join (__dirname, './assets')))
 
 app.use (routes.routes (), router.allowedMethods ())
 
-app.listen (6324, err => {
+export default app.listen (config.port, err => {
   if (err) console.log (err)
-  console.log (`🌴  Koa server listen on 6324`)
-  console.log (`👟  Mode is `)
+  console.log (`🌴  Koa server listen on ${config.port}`)
+  console.log (`👟  Mode is ${process.env.NODE_ENV}`)
 
 })
 
-export default app
+// app

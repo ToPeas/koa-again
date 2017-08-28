@@ -48,6 +48,7 @@
     "webpack": "^3.5.5"
   },
   "jest": {
+    "testEnvironment": "node",
     "rootDir": "./test"
   }
 }
