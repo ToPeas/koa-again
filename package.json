@@ -1,6 +1,6 @@
 {
   "name": "koa-admin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "一个没牌面的koa项目",
   "main": "app.js",
   "repository": "git@gitlab.com:ToPeas/koa.git",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
-    "test": "jest --forceExit"
+    "test": "cross-env NODE_ENV=test jest --forceExit"
   },
   "dependencies": {
     "babel-register": "^6.26.0",

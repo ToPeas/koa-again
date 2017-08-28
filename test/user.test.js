@@ -3,7 +3,7 @@ import app from '../src/index'
 
 describe ('测试user接口', () => {
   it ('登录接口', () => {
-    return request (app.listen (6325))
+    return request (app)
       .get ('/api/user/test')
       .expect ('Content-Type', /json/)
       .expect (200)
