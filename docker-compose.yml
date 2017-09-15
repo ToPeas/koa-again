@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  koa-again:
+    build: .
+    container_name: koa-again
+    ports: 
+      - 6324:6324
+    links: 
+      - mongo
+      - redis
+    environment: 
+      - MONGO_HOST=mongo
+      - MONGO_NAME=again
+    volumes: 
+      - .:/usr/app/
+  mongo:
+    image: mongo:3.4.9
+    container_name: mongo
+    environment: 
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/data/log
+    ports: 
+      - 27000:27017  
+    volumes: 
+      - ./data/mongo:/data/db   
+    # command: mongod --smallfiles --logpath=/dev/null # --quiet
+  redis:
+    image: redis
+     

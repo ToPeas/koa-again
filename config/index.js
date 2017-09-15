@@ -1,4 +1,8 @@
 const env = process.env.NODE_ENV || 'development'
+
+const mongoHost = process.env.MONGO_HOST;
+const mongoName = process.env.MONGO_NAME;
+
 const configs = {
   base: {
     env,
@@ -8,7 +12,7 @@ const configs = {
   production: {},
   development: {
     mongo: {
-      url: 'mongodb://localhost:27017/pei',
+      url: `mongodb://${mongoHost}/${mongoName}`,
     }
 
   },

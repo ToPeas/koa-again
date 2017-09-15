@@ -76,7 +76,7 @@ function getExpires(duraing, format = 'm') {
 app.use (session ({
   key: 'SESSIONID',
   store: new Store (),
-  expires: getExpires (10)
+  expires: getExpires (10000)
 }))
 
 // 后端渲染的页面

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+</head>
+
+<body>
+  <div>
+    <p><span> 登录名：</span><input type="text" id="username"></p>
+    <p><span>密&nbsp;&nbsp;&nbsp;码：</span><input id="password" type="password"></input>
+    </p>
+    <button id="btn" style="margin-left:60px">登录</button>
+  </div>
+
+  <p id="show"></p>
+
+</body>
+<script>
+  document.querySelector('#btn').addEventListener('click', () => {
+    const username = document.querySelector('#username').value
+    const password = document.querySelector('#password').value
+    fetch('api/user/login', {
+      method: 'post',
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      })
+    }).then(res => res.json()).then(res => {
+      const show = document.querySelector('#show')
+      if (res.code === 0) {
+        let time = 3
+        const timeId = setInterval(() => {
+          time--
+          show.innerHTML = `登录成功,${time}秒跳转到首页`
+          if (time < 1) {
+            location.href = '/'
+            clearInterval(timeId)
+          }
+        }, 1000)
+      } else {
+        show.innerHTML = res.message
+      }
+    }).catch(err => {
+      alert('服务器错误')
+    })
+
+  }, false)
+</script>
+
+</html>
