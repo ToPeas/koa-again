@@ -62,7 +62,7 @@ app.use(
 
 // session
 
-function getExpires(duraing, format = 'm') {
+function getExpires(during, format = 'm') {
   //以一分钟为最低间隔时间
   let base = 60 * 1000
   let date = new Date()
@@ -72,7 +72,7 @@ function getExpires(duraing, format = 'm') {
     d: 24 * 60 * base
   }
 
-  date.setTime(date.getTime() + duraing * translate[format])
+  date.setTime(date.getTime() + during * translate[format])
 
   return date
 }
