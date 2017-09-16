@@ -27,4 +27,10 @@ services:
     # command: mongod --smallfiles --logpath=/dev/null # --quiet
   redis:
     image: redis
+    container_name: redis
+    volumes: 
+      - ./data/redis:/data/redis  
+
+    
+
      

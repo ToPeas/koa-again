@@ -28,85 +28,90 @@ import compress from 'koa-compress'
 //   console.log (files)
 // })
 
-const app = new Koa ()
+const app = new Koa()
 
-const router = new KoaRouter ()
+const router = new KoaRouter()
 // 引入主 路由表
 
 // 这里使用app.use(bodyParser) 会报错
 // https://segmentfault.com/q/1010000009716118
-app.use (bodyParser ())
+app.use(bodyParser())
 
-app.use (logger ())
+app.use(logger())
 
-app.use (helmet ())
+app.use(helmet())
 
 // 压缩文件
-app.use (compress ({
-  filter: function (content_type) {
-    // console.log (content_type)
-    // console.log (/image\/png/i.test (content_type))
-    return /image\/png/i.test (content_type)
-  },
-  threshold: 2048,
-  flush: require ('zlib').Z_SYNC_FLUSH
-}))
+app.use(
+  compress({
+    filter: function(content_type) {
+      // console.log (content_type)
+      // console.log (/image\/png/i.test (content_type))
+      return /image\/png/i.test(content_type)
+    },
+    threshold: 2048,
+    flush: require('zlib').Z_SYNC_FLUSH
+  })
+)
 
-app.use (cache (path.join (__dirname, 'assets'), {
-  maxAge: 60
-}))
+app.use(
+  cache(path.join(__dirname, 'assets'), {
+    maxAge: 60
+  })
+)
 
 // session
 
 function getExpires(duraing, format = 'm') {
   //以一分钟为最低间隔时间
   let base = 60 * 1000
-  let date = new Date ()
+  let date = new Date()
   let translate = {
     m: base,
     h: 60 * base,
     d: 24 * 60 * base
   }
 
-  date.setTime (date.getTime () + duraing * translate[format])
+  date.setTime(date.getTime() + duraing * translate[format])
 
   return date
 }
 
-app.use (session ({
-  key: 'SESSIONID',
-  store: new Store (),
-  expires: getExpires (10000)
-}))
+app.use(
+  session({
+    key: 'SESSIONID',
+    store: new Store(),
+    expires: getExpires(1, 'd')
+  })
+)
 
 // 后端渲染的页面
-app.use (views (path.join (__dirname, './views'), { map: { html: 'nunjucks' } }))
+app.use(views(path.join(__dirname, './views'), { map: { html: 'nunjucks' } }))
 
 // 统一处理错误的模板
 
-app.use (returnTemplate)
+app.use(returnTemplate)
 
 // 后端页面渲染
 
-app.use (route.routes (), router.allowedMethods ())
+app.use(route.routes(), router.allowedMethods())
 
 // 处理favicon
 
-app.use (koaFavicon (path.join (__dirname, './assets/images/avatar.png')))
+app.use(koaFavicon(path.join(__dirname, './assets/images/avatar.png')))
 
 // 静态资源的处理
 
-app.use (koaStatic (path.join (__dirname, './assets')))
+app.use(koaStatic(path.join(__dirname, './assets')))
 
 // 这是接口api
 
-app.use (routes.routes (), router.allowedMethods ())
+app.use(routes.routes(), router.allowedMethods())
 
-export default app.listen (config.port, err => {
-  if (err) console.log (err)
-  console.log (`🌴  Koa server listen on ${config.port}`)
-  console.log (`👟  Mode is ${process.env.NODE_ENV}`)
-
+export default app.listen(config.port, err => {
+  if (err) console.log(err)
+  console.log(`🌴  Koa server listen on ${config.port}`)
+  console.log(`👟  Mode is ${process.env.NODE_ENV}`)
 })
 
 // app
