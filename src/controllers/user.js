@@ -37,7 +37,7 @@ export const login = async (ctx, next) => {
 
 export const all = async (ctx, next) => {
   const users = await User.find ()
-  if (users) return ctx.success ('获取所有数据成功', { users, session: ctx.session }, 200)
+  if (users) return ctx.success ('获取所有数据成功', { users }, 200)
   await next ()
 }
 

@@ -3,11 +3,11 @@
   "version": "1.0.1",
   "description": "一个没牌面的koa项目",
   "main": "app.js",
-  "repository": "git@gitlab.com:ToPeas/koa.git",
+  "repository": "https://github.com/ToPeas/koa-again.git",
   "author": "topeas <peiqixin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
+    "start": "cross-env NODE_ENV=development nodemon ./src/index.js",
     "test": "cross-env NODE_ENV=test jest --forceExit"
   },
   "dependencies": {
