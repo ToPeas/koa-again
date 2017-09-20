@@ -3,7 +3,7 @@ version: '3'
 services:
   koa-again:
     build: .
-    container_name: koa.again
+    container_name: koa-again
     ports: 
       - 6324:6324
     links: 

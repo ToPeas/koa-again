@@ -1,4 +1,4 @@
-FROM node:8.5-alpine
+FROM node:8.5
 
 LABEL maintainer topeas<peiqixin@gmail.com>
 
@@ -8,14 +8,11 @@ RUN mkdir -p /usr/app
 
 COPY package.json /usr/app
 
-RUN npm i
+RUN npm i -g yarn && yarn 
 
 COPY . /usr/app
 
-# CMD ['pm2','start','src/index.js']
-# CMD ['pm2','start','src/index.js']
-
-CMD ["npm","run","dev"]
+CMD ["yarn","run","start"]
 
 
 
