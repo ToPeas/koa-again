@@ -12,8 +12,7 @@ services:
     environment: 
       - MONGO_HOST=mongo
       - MONGO_NAME=again
-    volumes: 
-      - .:/usr/app/
+
   mongo:
     image: mongo:3.4.9
     container_name: mongo
