@@ -10,9 +10,10 @@ services:
       - mongo
       - redis
     environment: 
-      - NODE_ENV=prodiction
       - MONGO_HOST=mongo
       - MONGO_NAME=again
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379 
 
   mongo:
     image: mongo:3.4.9
@@ -30,10 +31,9 @@ services:
     container_name: redis
     volumes: 
       - ./data/redis:/data/redis
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379  
-
-    
+      
+networks:
+  wekan-tier:
+    driver: bridge
 
      

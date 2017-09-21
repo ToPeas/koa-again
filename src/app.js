@@ -1,4 +1,5 @@
 import Koa from 'koa'
+import config from '../config/index.js'
 import KoaRouter from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 import logger from 'koa-logger'
@@ -8,7 +9,6 @@ import path from 'path'
 import koaStatic from 'koa-static'
 import koaFavicon from 'koa-favicon'
 import Store from './middlewares/redisStore.js'
-import config from '../config/index.js'
 import routes from './api-routes/index.js'
 import route from './routes/index.js'
 import './middlewares/db.js'
@@ -37,7 +37,7 @@ const router = new KoaRouter()
 // https://segmentfault.com/q/1010000009716118
 app.use(bodyParser())
 
-app.use(logger())
+if (process.env.NODE_ENV !== 'test') app.use(logger())
 
 app.use(helmet())
 
@@ -110,10 +110,9 @@ app.use(routes.routes(), router.allowedMethods())
 
 app.listen(config.port, err => {
   if (err) console.log(err)
+  // console.log(process.env)
   console.log(`🌴  Koa server listen on ${config.port}`)
   console.log(`👟  Mode is ${process.env.NODE_ENV}`)
 })
 
 module.exports = app
-
-// app

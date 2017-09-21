@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
 import config from '../../config/index'
 
-// console.log (config.mongo.MONGO_URL)
+console.log (config.mongo)
 
 // const MONGO_URI = 'mongodb://localhost:27017/pei'
 mongoose.Promise = global.Promise
+
 
 mongoose.connect (config.mongo.url, { useMongoClient: true, })
 

@@ -8,7 +8,7 @@ router.get ('/all', jwt, all)
   .get ('/test', test)
   .get ('/testClass', testClass)
   .get ('/:id', jwt, one)
-  .post ('/add', add)
+  .post ('/add',jwt, add)
   .post ('/login', login)
   .del ('/:id', jwt, del)
 
