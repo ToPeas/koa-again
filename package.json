@@ -7,10 +7,14 @@
   "author": "topeas <peiqixin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon ./src/index.js",
-    "test": " NODE_ENV=test jest --forceExit"
+    "dev": "NODE_ENV=development nodemon ./src/index.js",
+    "start": "NODE_ENV=production nodemon ./src/index.js",    
+    "test": " NODE_ENV=test jest --forceExit",
+    "dev:test": " NODE_ENV=test nodemon ./src/index.js"
   },
   "dependencies": {
+    "cross-env": "^5.0.5",
+    "dotenv": "^4.0.0",
     "glob": "^7.1.2",
     "ioredis": "^3.1.4",
     "jsonwebtoken": "^7.4.3",

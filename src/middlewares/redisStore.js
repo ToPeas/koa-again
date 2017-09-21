@@ -1,12 +1,15 @@
 import Redis from 'ioredis'
 import { Store } from 'koa-session2'
+import config from '../../config'
+
+const host = process.env.NODE_ENV === 'test' ? '127.0.0.1':'redis'
 
 class RedisStore extends Store {
   constructor() {
     super ()
     this.redis = new Redis ({
-      port: '6379',
-      host: 'redis',
+      port: config.redis.port,
+      host: config.redis.host,
     })
   }
 

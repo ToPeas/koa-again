@@ -11,6 +11,7 @@ COPY package.json /usr/app
 RUN npm config set registry https://registry.npm.taobao.org
 
 # RUN npm i -g yarn && yarn 
+
 RUN npm install
 
 COPY . /usr/app

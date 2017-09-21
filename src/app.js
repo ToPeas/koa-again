@@ -108,10 +108,12 @@ app.use(koaStatic(path.join(__dirname, './assets')))
 
 app.use(routes.routes(), router.allowedMethods())
 
-export default app.listen(config.port, err => {
+app.listen(config.port, err => {
   if (err) console.log(err)
   console.log(`🌴  Koa server listen on ${config.port}`)
   console.log(`👟  Mode is ${process.env.NODE_ENV}`)
 })
+
+module.exports = app
 
 // app
