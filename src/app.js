@@ -110,7 +110,6 @@ app.use(routes.routes(), router.allowedMethods())
 
 app.listen(config.port, err => {
   if (err) console.log(err)
-  // console.log(process.env)
   console.log(`🌴  Koa server listen on ${config.port}`)
   console.log(`👟  Mode is ${process.env.NODE_ENV}`)
 })

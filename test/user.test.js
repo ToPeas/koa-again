@@ -27,6 +27,17 @@ describe('测试user接口', () => {
     token = data.data.token
     expect(data.message).toBe('登录成功')
   })
+  it('token被修改添加新用户', async () => {
+    const res = await request.post('/api/user/add')
+    .set('Authorization', `Bearer ${token}1`)
+    .send({
+      username: 'cc',
+      password: '123',
+      email: '1233@qq.com'
+    })
+    const statusCode = res.statusCode
+    expect(statusCode).toEqual(401)
+  })
 
   it('添加新用户', async () => {
     const res = await request.post('/api/user/add')
@@ -36,7 +47,6 @@ describe('测试user接口', () => {
       password: '123',
       email: '1233@qq.com'
     })
-    // console.log(res)
     const data = res.body
     id = data.data._id
     expect(data.message).toBe('创建成功')
